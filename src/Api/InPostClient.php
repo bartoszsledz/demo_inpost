@@ -8,8 +8,6 @@ use RuntimeException;
 
 class InPostClient implements ApiClientInterface
 {
-    private const BASE_URL = 'https://api-shipx-pl.easypack24.net/v1';
-
     public function __construct(private readonly Client $client)
     {
     }
@@ -22,7 +20,7 @@ class InPostClient implements ApiClientInterface
             ],
         ];
         try {
-            $response = $this->client->get(self::BASE_URL . $url, $options);
+            $response = $this->client->get(getenv('INPOST_URL') . $url, $options);
         } catch (ClientException $exception) {
             throw new RuntimeException(
                 sprintf(
