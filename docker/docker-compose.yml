@@ -1,0 +1,24 @@
+version: '3.8'
+
+name: inpost-demo-docker
+services:
+  inpost-demo-app:
+    container_name: inpost-demo-app
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ..:/var/www/html
+    expose:
+      - "9000"
+
+  inpost-demo-nginx:
+    container_name: inpost-demo-nginx
+    image: nginx:alpine
+    volumes:
+      - ..:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "9000:80"
+    depends_on:
+      - inpost-demo-app
